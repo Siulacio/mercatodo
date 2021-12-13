@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $user = User::create([
+        $adminUser = User::create([
             'name' => 'admin',
             'last_name' => 'admin',
             'identification' => '123',
@@ -23,6 +23,19 @@ class UserSeeder extends Seeder
             'email' => 'admin@example.com',
             'email_verified_at' => date('Y-m-s H:m:s'),
             'role' => 'admin',
+            'password' => bcrypt('123'),
+        ]);
+
+
+        $standarUser = User::create([
+            'name' => 'standar',
+            'last_name' => 'standar',
+            'identification' => '321',
+            'address' => 'standar address',
+            'phone' => '3003003000',
+            'email' => 'standar@example.com',
+            'email_verified_at' => date('Y-m-s H:m:s'),
+            'role' => 'standar',
             'password' => bcrypt('123'),
         ]);
     }
