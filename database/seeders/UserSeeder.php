@@ -22,6 +22,7 @@ class UserSeeder extends Seeder
             'phone' => '3003003000',
             'email' => 'admin@example.com',
             'email_verified_at' => date('Y-m-s H:m:s'),
+            'role' => 'admin',
             'password' => bcrypt('123'),
         ]);
     }
