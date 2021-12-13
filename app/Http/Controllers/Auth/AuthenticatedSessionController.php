@@ -34,7 +34,6 @@ class AuthenticatedSessionController extends Controller
 
 
         if(Auth::user()->role == 'admin'){
-            //return view('admin.menu');
             return redirect()->route('admin.index');
         }
 
