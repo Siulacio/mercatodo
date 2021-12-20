@@ -55,5 +55,11 @@
         </div>
     </div>
 </div>
+
+<div id="app">
+    <vue-example-name></vue-example-name>
+</div>
+
+<script src="{{asset('js/app.js')}}"></script>
 </body>
 </html>
