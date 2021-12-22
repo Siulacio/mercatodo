@@ -16,6 +16,12 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'last_name' => $this->faker->lastName(),
+            'identification' => $this->faker->unique()->numberBetween(1000000000,9999999999),
+            'address' => $this->faker->randomElement(['Cr 20 # 15 -17 - Barrio prueba','Diag 18 # 45-32 - Barrio test']),
+            'phone' => $this->faker->phoneNumber(),
+            'role' => $this->faker->randomElement(['admin','standar']),
+            'state' => $this->faker->randomElement([true]),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
