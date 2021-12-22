@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('address',50);
             $table->string('phone',15);
             $table->enum('role',['standar','admin'])->default('standar');
+            $table->boolean('state')->default(true);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
