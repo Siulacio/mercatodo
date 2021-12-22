@@ -38,5 +38,18 @@ class UserSeeder extends Seeder
             'role' => 'standar',
             'password' => bcrypt('123'),
         ]);
+
+        $inactiveUser = User::create([
+            'name' => 'inactive',
+            'last_name' => 'inactive',
+            'identification' => '654',
+            'address' => 'inactive address',
+            'phone' => '4004004000',
+            'email' => 'inactive@example.com',
+            'email_verified_at' => date('Y-m-s H:m:s'),
+            'role' => 'standar',
+            'state'=>false,
+            'password' => bcrypt('123'),
+        ]);
     }
 }
