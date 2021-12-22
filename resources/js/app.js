@@ -10,6 +10,7 @@ Alpine.start();
 //window.Vue = require('vue').default;
 window.Vue = require('vue');
 Vue.component('vue-example-name', require('./components/VueExample.vue').default);
+Vue.component('user', require('./components/User.vue').default);
 const app = new Vue({
     el: '#app',
 });
