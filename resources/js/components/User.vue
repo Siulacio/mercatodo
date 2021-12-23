@@ -1,6 +1,5 @@
 <template>
     <div class="container mt-3">
-        <h1 class="text-center">Gestión Usuarios</h1>
         <button @click=" modify=false; openModal();" type="button" class="btn btn-dark btn-sm" style="font-style: oblique">
             Nuevo Usuario
         </button>
