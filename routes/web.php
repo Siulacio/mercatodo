@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -13,9 +14,14 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('admin', '\App\Http\Controllers\AdminController@index')->name('admin.index');
-//Route::get('users/edit/{id}', '\App\Http\Controllers\UserController@edit')->name('user.edit');
-//Route::post('users/update', '\App\Http\Controllers\UserController@update')->name('user.update');
+Route::get('admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('admin/users', [AdminController::class, 'usersList'])->name('admin.users.list');
+Route::get('admin/products', [AdminController::class, 'productsList'])->name('admin.products.list');
+
+/*
+Route::get('admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('admin/template', [AdminController::class, 'template'])->name('admin.template');
+ * */
 
 Route::apiResource('/users',UserController::class);
 Route::get('/users/change_state/{id}', [UserController::class, 'changeState'])->name('user.changeState');
