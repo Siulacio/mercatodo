@@ -10,7 +10,17 @@ class AdminController extends Controller
 {
     public function index() : View
     {
+        return view('admin.template');
+    }
+
+    public function usersList() : View
+    {
         $users = User::get();
-        return view('admin.menu', compact('users'));
+        return view('admin.user', compact('users'));
+    }
+
+    public function productsList() : View
+    {
+        return view('admin.product');
     }
 }
