@@ -48,7 +48,12 @@
 
 <div class="container-fluid">
     <div class="row">
-    @include('admin.partials.side-menu')
+
+        @if( Auth()->user()->role == 'admin')
+            @include('admin.partials.side-menu')
+        @else
+            @include('admin.partials.side-menu-standar')
+        @endif
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -68,16 +73,10 @@
 
             @show
 
-{{--            <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>--}}
-
         </main>
     </div>
 </div>
 
-
-{{--<script src="/docs/5.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>--}}
-
-{{--<script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" integrity="sha384-zNy6FEbO50N+Cg5wap8IKA4M/ZnLJgzc6w2NqACZaK0u0FXfOWRRJOnQtpZun8ha" crossorigin="anonymous"></script><script src="dashboard.js"></script>--}}
 <script src="{{asset('js/app.js')}}"></script>
 <script src="{{asset('js/manifest.js')}}"></script>
 <script src="{{asset('js/vendor.js')}}"></script>

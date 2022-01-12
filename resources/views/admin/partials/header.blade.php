@@ -6,7 +6,14 @@
     <input class="form-control form-control-dark w-100" type="text" placeholder="@lang('Search')" aria-label="Search">
     <div class="navbar-nav">
         <div class="nav-item text-nowrap">
-            <a class="nav-link px-3" href="#">@lang('Exit')</a>
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <a class="nav-link px-3"
+                   href="{{ route('logout') }}"
+                   onclick="event.preventDefault(); this.closest('form').submit();">
+                    @lang('Exit')
+                </a>
+            </form>
         </div>
     </div>
 </header>
