@@ -2,5 +2,15 @@
     "Exit" : "Salir",
     "Users" : "Usuarios",
     "Products" : "Productos",
-    "Search" : "Buscar"
+    "Search" : "Buscar",
+    "Products management" : "Administración de productos",
+    "Users management" : "Administración de usuarios",
+    "New product" : "Nuevo producto",
+    "code" : "codigo",
+    "name" : "nombre",
+    "description" : "descripción",
+    "quantity" : "cantidad",
+    "options" : "opciones",
+    "Showcase" : "Vitrina"
+
 }
