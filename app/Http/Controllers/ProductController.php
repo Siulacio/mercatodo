@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Admin\Files\StoreFileAction;
 use App\Actions\Admin\Products\StoreProductAction;
 use App\Models\Product;
 use App\Events\ProductSaved;
@@ -21,12 +22,16 @@ class ProductController extends Controller
         return Product::get();
     }
 
-    public function store(ProductStoreRequest $request, Product $product, StoreProductAction $storeProductAction) : void
+    public function store(
+        ProductStoreRequest $request,
+        Product $product,
+        StoreProductAction $storeProductAction,
+        StoreFileAction $storeFileAction) : void
     {
         $storeProductAction->execute($request->validated(), $product);
 
         if ($request->hasFile('images')){
-            $this->uploadFiles($request, $product);
+            $storeFileAction->uploadFiles($request, $product);
         }
     }
 
@@ -35,12 +40,15 @@ class ProductController extends Controller
         return $product;
     }
 
-    public function update(ProductStoreRequest $request, Product $product) : void
+    public function update(
+        ProductStoreRequest $request,
+        Product $product,
+        StoreFileAction $storeFileAction) : void
     {
         $product->update($request->validated());
 
         if ($request->hasFile('images')){
-            $this->uploadFiles($request, $product);
+            $storeFileAction->uploadFiles($request, $product);
         }
     }
 
@@ -72,20 +80,5 @@ class ProductController extends Controller
                 $query->first();
             }])
             ->paginate($per_page);
-    }
-
-    private function uploadFiles(Request $request, Product $product) : void
-    {
-        foreach ( $request->file('images') as $image){
-            $image->store('images', 'public');
-            $newImage = ProductImages::create([
-                'product_id' => $product->id,
-                'name' => $image->getClientOriginalName(),
-                'image' => $image->store('images', 'public')
-            ]);
-
-            //optimize images
-            ProductSaved::dispatch($newImage);
-        }
     }
 }
