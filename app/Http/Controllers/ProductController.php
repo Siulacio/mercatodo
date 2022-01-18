@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Admin\Products\StoreProductAction;
 use App\Models\Product;
 use App\Events\ProductSaved;
 use Illuminate\Http\Request;
@@ -20,17 +21,9 @@ class ProductController extends Controller
         return Product::get();
     }
 
-    public function store(ProductStoreRequest $request) : void
+    public function store(ProductStoreRequest $request, Product $product, StoreProductAction $storeProductAction) : void
     {
-        //move to action
-        $product = Product::create([
-            'code' => $request->code,
-            'name' => $request->name,
-            'description' => $request->description,
-            'price' => $request->price,
-            'quantity' => $request->quantity,
-            'state' => $request->state,
-        ]);
+        $storeProductAction->execute($request->validated(), $product);
 
         if ($request->hasFile('images')){
             $this->uploadFiles($request, $product);
