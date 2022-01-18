@@ -22,6 +22,7 @@ class ProductController extends Controller
 
     public function store(ProductStoreRequest $request) : void
     {
+        //move to action
         $product = Product::create([
             'code' => $request->code,
             'name' => $request->name,
@@ -43,7 +44,7 @@ class ProductController extends Controller
 
     public function update(ProductStoreRequest $request, Product $product) : void
     {
-        $product->update($request->all());
+        $product->update($request->validated());
 
         if ($request->hasFile('images')){
             $this->uploadFiles($request, $product);
@@ -70,7 +71,14 @@ class ProductController extends Controller
     public function showcase(Request $request) : LengthAwarePaginator
     {
         $per_page = $request->per_page;
-        return Product::where('state',1)->paginate($per_page);
+        $filter = $request->search;
+
+        return Product::searchProduct($filter)
+            ->where('state',1)
+            ->with(['images'=>function($query){
+                $query->first();
+            }])
+            ->paginate($per_page);
     }
 
     private function uploadFiles(Request $request, Product $product) : void
