@@ -15,7 +15,7 @@ class ProductFactory extends Factory
             'description' => $this->faker->text(),
             'price' => $this->faker->randomNumber(),
             'quantity' => $this->faker->numberBetween('1','30'),
-            'state' => $this->faker->randomElement([true, false])
+            'state' => $this->faker->randomElement([true])
         ];
     }
 }
