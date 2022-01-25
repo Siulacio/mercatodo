@@ -17,8 +17,8 @@ class OptimizeProductImages
     public function handle(ProductSaved $event) : void
     {
         $optimizeImage = Image::make(Storage::disk('public')->get($event->image->image))
-            ->widen(350)
-            ->limitColors(255)
+            ->widen(config('utilities.image_width_optimize'))
+            ->limitColors(config('utilities.limit_colors_image'))
             ->encode();
 
         Storage::disk('public')->put($event->image->image, (string) $optimizeImage);
