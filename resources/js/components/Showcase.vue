@@ -44,7 +44,7 @@
                     <div class="card-body">
                         <h5 class="card-title" style="font-weight: bold" v-text="product.name"></h5>
                         <p class="card-text text-truncate" v-text="product.description"></p>
-                        <a href="#" class="btn btn-primary mt-2">Ver más</a>
+                        <a href="#" class="btn btn-primary mt-2">${{ product.price }}</a>
                     </div>
                 </div>
             </div>
