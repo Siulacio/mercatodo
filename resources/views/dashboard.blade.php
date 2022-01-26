@@ -6,3 +6,6 @@
         <showcase></showcase>
     </div>
 @endsection
+@section('scripts')
+
+@endsection
