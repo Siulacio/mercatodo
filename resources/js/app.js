@@ -1,11 +1,13 @@
 import Vue from "vue";
-
+import Toasted from "vue-toasted";
 require('./bootstrap');
 
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 Alpine.start();
+
+Vue.use(Toasted);
 
 //window.Vue = require('vue').default;
 window.Vue = require('vue');
