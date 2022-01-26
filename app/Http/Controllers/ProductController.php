@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Admin\Files\StoreFileAction;
 use App\Actions\Admin\Products\StoreProductAction;
+use App\Exports\ProductsExport;
 use App\Models\Product;
 use App\Events\ProductSaved;
 use Illuminate\Http\Request;
@@ -12,6 +13,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ProductStoreRequest;
+use Maatwebsite\Excel\Facades\Excel;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 
 class ProductController extends Controller
@@ -80,5 +83,10 @@ class ProductController extends Controller
                 $query->first();
             }])
             ->paginate($per_page);
+    }
+
+    public function exportExcel() : BinaryFileResponse
+    {
+        return Excel::download(new ProductsExport(), 'product-list.xlsx');
     }
 }
