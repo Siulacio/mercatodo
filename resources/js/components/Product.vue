@@ -214,17 +214,16 @@
 
                     if(this.modify){
                         let response = await axios.post('/products/update/' + this.product_id, product, {headers: {"Content-Type": "multipart/form-data"}});
+                        this.successNotifier(response.data.message);
                     }else{
                         let response = await axios.post('/products', product, {headers: {"Content-Type": "multipart/form-data"}});
-                        // toastr.success('producto creado exitosamente');
+                        this.successNotifier(response.data.message);
                     }
-
                     this.closeModal();
                     this.list();
                 }catch (error){
                     if(error.response.data){
                         this.errors = error.response.data.errors;
-                        // toastr.error('Error');
                     }
                 }
             },
@@ -241,9 +240,15 @@
                 this.images = response.data;
             },
             async deleteImage(id){
-                console.log(id);
                 let response = await axios.get('/products/images/delete/'+id);
                 this.listImages();
+                this.successNotifier(response.data.message);
+            },
+            successNotifier(message){
+                this.$toasted.success(message, {
+                    duration:2000,
+                    keepOnHover: true,
+                });
             }
         },
         created() {
