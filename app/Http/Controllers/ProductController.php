@@ -7,6 +7,7 @@ use App\Actions\Admin\Products\StoreProductAction;
 use App\Exports\ProductsExport;
 use App\Models\Product;
 use App\Events\ProductSaved;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\ProductImages;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -29,13 +30,15 @@ class ProductController extends Controller
         ProductStoreRequest $request,
         Product $product,
         StoreProductAction $storeProductAction,
-        StoreFileAction $storeFileAction) : void
+        StoreFileAction $storeFileAction) : JsonResponse
     {
         $storeProductAction->execute($request->validated(), $product);
 
         if ($request->hasFile('images')){
             $storeFileAction->uploadFiles($request, $product);
         }
+
+        return response()->json(['message'=>'Producto almacenado exitosamente']);
     }
 
     public function show(Product $product) : Product
@@ -46,13 +49,14 @@ class ProductController extends Controller
     public function update(
         ProductStoreRequest $request,
         Product $product,
-        StoreFileAction $storeFileAction) : void
+        StoreFileAction $storeFileAction) : JsonResponse
     {
         $product->update($request->validated());
 
         if ($request->hasFile('images')){
             $storeFileAction->uploadFiles($request, $product);
         }
+        return response()->json(['message'=>'Producto actualizado exitosamente']);
     }
 
     public function changeState(int $id) : void
@@ -65,11 +69,13 @@ class ProductController extends Controller
         return ProductImages::where('product_id',$product->id)->get();
     }
 
-    public function destroyImage(int $id) : void
+    public function destroyImage(int $id) : JsonResponse
     {
         $image = ProductImages::find($id);
         Storage::disk('public')->delete($image->image);
         $image->delete();
+
+        return response()->json(['message'=>'Imagen eliminada exitosamente']);
     }
 
     public function showcase(Request $request) : LengthAwarePaginator
