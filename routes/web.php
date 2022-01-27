@@ -4,6 +4,7 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ReportController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,7 @@ require __DIR__.'/auth.php';
 Route::get('admin', [AdminController::class, 'index'])->name('admin.index');
 Route::get('admin/users', [AdminController::class, 'usersList'])->name('admin.users.list');
 Route::get('admin/products', [AdminController::class, 'productsList'])->name('admin.products.list');
+Route::get('admin/reports',[AdminController::class, 'reports'])->name('admin.reports.index');
 
 //users routes
 Route::apiResource('/users',UserController::class);
@@ -33,3 +35,4 @@ Route::get('/products/change_state/{id}',[ProductController::class, 'changeState
 Route::get('/products/export/excel',[ProductController::class, 'exportExcel'])->name('product.export.excel');
 Route::post('/products/import/excel',[ProductController::class, 'importExcel'])->name('product.import.excel');
 Route::get('/showcase',[ProductController::class, 'showcase'])->name('showcase');
+Route::post('/reports/products',[ReportController::class, 'productReport'])->name('report.product');
