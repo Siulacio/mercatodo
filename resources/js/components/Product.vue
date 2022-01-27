@@ -3,6 +3,9 @@
         <button @click=" modify=false; openModal();" type="button" class="btn btn-dark btn-sm" style="font-style: oblique">
             Nuevo producto
         </button>
+        <button @click="exportData();" type="button" class="btn btn-dark btn-sm" style="font-style: oblique">
+            Exportar registros
+        </button>
 
         <table class="table table-hover mt-3">
             <thead class="table-dark">
@@ -242,6 +245,11 @@
             async deleteImage(id){
                 let response = await axios.get('/products/images/delete/'+id);
                 this.listImages();
+                this.successNotifier(response.data.message);
+            },
+            async exportData(){
+                let response = await axios.get('/products/export/excel');
+                console.log(response.data);
                 this.successNotifier(response.data.message);
             },
             successNotifier(message){
