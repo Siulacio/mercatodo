@@ -31,4 +31,5 @@ Route::get('/products/images/delete/{image}',[ProductController::class,'destroyI
 Route::post('/products/update/{product}',[ProductController::class, 'update'])->name('product.update');
 Route::get('/products/change_state/{id}',[ProductController::class, 'changeState'])->name('product.changeState');
 Route::get('/products/export/excel',[ProductController::class, 'exportExcel'])->name('product.export.excel');
+Route::post('/products/import/excel',[ProductController::class, 'importExcel'])->name('product.import.excel');
 Route::get('/showcase',[ProductController::class, 'showcase'])->name('showcase');
