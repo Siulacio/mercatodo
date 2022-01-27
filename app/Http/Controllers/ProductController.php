@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Admin\Files\StoreFileAction;
-use App\Actions\Admin\Products\StoreProductAction;
-use App\Exports\ProductsExport;
 use App\Models\Product;
-use App\Events\ProductSaved;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use App\Events\ProductSaved;
 use App\Models\ProductImages;
-use Illuminate\Pagination\LengthAwarePaginator;
+use App\Exports\ProductsExport;
+use Illuminate\Http\JsonResponse;
+use App\Jobs\NotifyCompleteExport;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\ProductStoreRequest;
-use Maatwebsite\Excel\Facades\Excel;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use App\Actions\Admin\Files\StoreFileAction;
+use Illuminate\Pagination\LengthAwarePaginator;
+use App\Actions\Admin\Products\StoreProductAction;
+
 
 
 class ProductController extends Controller
@@ -91,8 +91,16 @@ class ProductController extends Controller
             ->paginate($per_page);
     }
 
-    public function exportExcel() : BinaryFileResponse
+    public function exportExcel() : JsonResponse
     {
-        return Excel::download(new ProductsExport(), 'product-list.xlsx');
+        $fileName = 'exports/product_list_'.date('Y-m-d-H-m-s').'.xlsx';
+        $filePath = asset('storage/'.$fileName);
+        $user = auth()->user();
+
+        (new ProductsExport)->store($fileName, 'public')->chain([
+            new NotifyCompleteExport($user, $filePath)
+        ]);
+
+        return response()->json(['message'=>'La exportación ha comenzado.<br> te enviaremos un email una vez finalizado.']);
     }
 }
