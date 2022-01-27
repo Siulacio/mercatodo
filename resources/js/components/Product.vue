@@ -1,11 +1,28 @@
 <template>
     <div class="container mt3">
-        <button @click=" modify=false; openModal();" type="button" class="btn btn-dark btn-sm" style="font-style: oblique">
-            Nuevo producto
-        </button>
-        <button @click="exportData();" type="button" class="btn btn-dark btn-sm" style="font-style: oblique">
-            Exportar registros
-        </button>
+
+        <div class="row">
+            <div class="col-auto">
+                <button @click=" modify=false; openModal();" type="button" class="btn btn-dark btn-sm" style="font-style: oblique">
+                    Nuevo producto
+                </button>
+                <button @click="exportData();" type="button" class="btn btn-dark btn-sm" style="font-style: oblique">
+                    Exportar productos
+                </button>
+            </div>
+            <div class="col-4">
+                &nbsp;
+            </div>
+            <div class="col-auto">
+                <form id="frmImport" ref="frmImport" enctype="multipart/form-data">
+                    <input type="file" name="file" id="file">
+                    <button @click.prevent="uploadProducts();" type="submit" class="btn btn-dark btn-sm" style="font-style: oblique;">
+                        Importar productos
+                    </button>
+                </form>
+            </div>
+        </div>
+        <span class="text-danger" v-if="errors.file" v-text="errors.file[0]"></span>
 
         <table class="table table-hover mt-3">
             <thead class="table-dark">
@@ -252,8 +269,29 @@
                 console.log(response.data);
                 this.successNotifier(response.data.message);
             },
+            async uploadProducts(){
+                try {
+                    let formFields = document.getElementById('frmImport');
+                    let products = new FormData(formFields);
+                    let response = await axios.post('/products/import/excel', products, {headers:{"Content-Type":"multipart/form-data"}});
+                    this.list();
+                    this.successNotifier(response.data.message);
+                    this.$refs.frmImport.reset();
+                }catch (error){
+                    console.log(error);
+                    if(error.response.data){
+                        this.errors = error.response.data.errors;
+                    }
+                }
+            },
             successNotifier(message){
                 this.$toasted.success(message, {
+                    duration:2000,
+                    keepOnHover: true,
+                });
+            },
+            errorNotifier(message){
+                this.$toasted.error(message, {
                     duration:2000,
                     keepOnHover: true,
                 });
