@@ -23,4 +23,9 @@ class AdminController extends Controller
     {
         return view('admin.product');
     }
+
+    public function reports() : View
+    {
+        return view('admin.reports');
+    }
 }
