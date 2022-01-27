@@ -33,7 +33,7 @@ class Product extends Model
 
         return $query;
     }
-    
+
     public function images(): HasMany
     {
         return $this->hasMany(ProductImages::class);
