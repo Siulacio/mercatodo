@@ -19,6 +19,13 @@
                     @lang('Products')
                 </a>
             </li>
+            <hr class="mt-2">
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.reports.index') ? 'active' : '' }}" href="{{ route('admin.reports.index') }}">
+                    <span data-feather="shopping-cart"></span>
+                    @lang('Reports')
+                </a>
+            </li>
             <!--
             <li class="nav-item">
                 <a class="nav-link" href="#">
